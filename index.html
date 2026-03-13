@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BP AUTOMATICO â Calculadora de CenÃ¡rios</title>
+<title>BP AUTOMATICO — Calculadora de Cenários</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
@@ -123,17 +123,17 @@ tr:hover td{background:rgba(99,179,237,.03)}
   <div class="header-left">
     <div>
       <div class="logo">BP AUTOMATICO</div>
-      <div class="header-sub">Calculadora de CenÃ¡rios â SimulaÃ§Ã£o em tempo real</div>
+      <div class="header-sub">Calculadora de Cenários — Simulação em tempo real</div>
     </div>
   </div>
   <div class="header-right">
-    <div class="live-badge"><span class="pulse"></span>CÃ¡lculo ao vivo</div>
+    <div class="live-badge"><span class="pulse"></span>Cálculo ao vivo</div>
   </div>
 </div>
 
 <!-- ===== SCENARIO BAR ===== -->
 <div class="scenario-bar">
-  <span class="scenario-label">CenÃ¡rio</span>
+  <span class="scenario-label">Cenário</span>
   <div class="scenario-pills">
     <button class="pill" onclick="applyPreset('conservador',this)">Conservador</button>
     <button class="pill active" onclick="applyPreset('base',this)">Base</button>
@@ -154,7 +154,7 @@ tr:hover td{background:rgba(99,179,237,.03)}
     <button class="cp-tab active" onclick="cpTab('invest',this)">Investimento</button>
     <button class="cp-tab" onclick="cpTab('receita',this)">Receita</button>
     <button class="cp-tab" onclick="cpTab('custos',this)">Custos</button>
-    <button class="cp-tab" onclick="cpTab('retencao',this)">RetenÃ§Ã£o</button>
+    <button class="cp-tab" onclick="cpTab('retencao',this)">Retenção</button>
   </div>
 
   <!-- Investimento -->
@@ -168,11 +168,11 @@ tr:hover td{background:rgba(99,179,237,.03)}
       <input type="range" id="cac" class="sl-blue" min="50" max="300" step="5" value="120" oninput="recalc()">
     </div>
     <div class="cp-field">
-      <label>Ticket MÃ©dio Novos <span class="fval" id="d_tkt_new">R$ 250</span></label>
+      <label>Ticket Médio Novos <span class="fval" id="d_tkt_new">R$ 250</span></label>
       <input type="range" id="tkt_new" class="sl-blue" min="50" max="1000" step="10" value="250" oninput="recalc()">
     </div>
     <div class="cp-field">
-      <label>Ticket MÃ©dio Legados <span class="fval" id="d_tkt_leg">R$ 600</span></label>
+      <label>Ticket Médio Legados <span class="fval" id="d_tkt_leg">R$ 600</span></label>
       <input type="range" id="tkt_leg" class="sl-blue" min="100" max="2000" step="25" value="600" oninput="recalc()">
     </div>
   </div>
@@ -184,7 +184,7 @@ tr:hover td{background:rgba(99,179,237,.03)}
       <input type="range" id="ggr_pct" class="sl-green" min="10" max="50" step="0.5" value="30" oninput="recalc()">
     </div>
     <div class="cp-field">
-      <label>Margem de ContribuiÃ§Ã£o <span class="fval" id="d_mc">70.0%</span></label>
+      <label>Margem de Contribuição <span class="fval" id="d_mc">70.0%</span></label>
       <input type="range" id="mc" class="sl-green" min="30" max="90" step="1" value="70" oninput="recalc()">
     </div>
   </div>
@@ -196,7 +196,7 @@ tr:hover td{background:rgba(99,179,237,.03)}
       <input type="range" id="c_plat" class="sl-orange" min="0" max="1000000" step="25000" value="200000" oninput="recalc()">
     </div>
     <div class="cp-field">
-      <label>SalÃ¡rios / OperaÃ§Ã£o <span class="fval" id="d_c_sal">R$ 500k</span></label>
+      <label>Salários / Operação <span class="fval" id="d_c_sal">R$ 500k</span></label>
       <input type="range" id="c_sal" class="sl-orange" min="0" max="3000000" step="50000" value="500000" oninput="recalc()">
     </div>
     <div class="cp-field">
@@ -209,30 +209,30 @@ tr:hover td{background:rgba(99,179,237,.03)}
     </div>
   </div>
 
-  <!-- RetenÃ§Ã£o -->
+  <!-- Retenção -->
   <div class="cp-section" id="sec-retencao">
     <div class="cp-field">
-      <label>RetenÃ§Ã£o M2 <span class="fval" id="d_r2">50.0%</span></label>
+      <label>Retenção M2 <span class="fval" id="d_r2">50.0%</span></label>
       <input type="range" id="r2" class="sl-cyan" min="10" max="80" step="1" value="50" oninput="recalc()">
     </div>
     <div class="cp-field">
-      <label>RetenÃ§Ã£o M3 <span class="fval" id="d_r3">40.0%</span></label>
+      <label>Retenção M3 <span class="fval" id="d_r3">40.0%</span></label>
       <input type="range" id="r3" class="sl-cyan" min="5" max="60" step="1" value="40" oninput="recalc()">
     </div>
     <div class="cp-field">
-      <label>RetenÃ§Ã£o M4 <span class="fval" id="d_r4">15.0%</span></label>
+      <label>Retenção M4 <span class="fval" id="d_r4">15.0%</span></label>
       <input type="range" id="r4" class="sl-cyan" min="3" max="40" step="0.5" value="15" oninput="recalc()">
     </div>
     <div class="cp-field">
-      <label>RetenÃ§Ã£o M5 <span class="fval" id="d_r5">10.1%</span></label>
+      <label>Retenção M5 <span class="fval" id="d_r5">10.1%</span></label>
       <input type="range" id="r5" class="sl-cyan" min="2" max="30" step="0.1" value="10.1" oninput="recalc()">
     </div>
     <div class="cp-field">
-      <label>RetenÃ§Ã£o M6 <span class="fval" id="d_r6">9.3%</span></label>
+      <label>Retenção M6 <span class="fval" id="d_r6">9.3%</span></label>
       <input type="range" id="r6" class="sl-cyan" min="2" max="25" step="0.1" value="9.3" oninput="recalc()">
     </div>
     <div class="cp-field">
-      <label>RetenÃ§Ã£o EstÃ¡vel (M7+) <span class="fval" id="d_rs">6.6%</span></label>
+      <label>Retenção Estável (M7+) <span class="fval" id="d_rs">6.6%</span></label>
       <input type="range" id="rs" class="sl-cyan" min="1" max="20" step="0.1" value="6.6" oninput="recalc()">
     </div>
     <div class="churn-display">
@@ -249,13 +249,13 @@ tr:hover td{background:rgba(99,179,237,.03)}
   <div class="kpi-grid">
     <div class="kpi">
       <div class="kpi-accent" style="background:linear-gradient(90deg,#3b82f6,#60a5fa)"></div>
-      <div class="kpi-label">FTDs / MÃªs</div>
+      <div class="kpi-label">FTDs / Mês</div>
       <div class="kpi-value" style="color:var(--blue)" id="k_ftds">8.333</div>
       <div class="kpi-sub" id="k_ftds_sub">200.000 em 24M</div>
     </div>
     <div class="kpi">
       <div class="kpi-accent" style="background:linear-gradient(90deg,#ea580c,#fb923c)"></div>
-      <div class="kpi-label">GGR MÃªs 24</div>
+      <div class="kpi-label">GGR Mês 24</div>
       <div class="kpi-value" style="color:var(--orange)" id="k_ggr24">R$ 4.3M</div>
       <div class="kpi-sub" id="k_dep24">Dep: R$ 14.2M</div>
     </div>
@@ -268,14 +268,14 @@ tr:hover td{background:rgba(99,179,237,.03)}
     <div class="kpi">
       <div class="kpi-accent" style="background:linear-gradient(90deg,#7c3aed,#a78bfa)"></div>
       <div class="kpi-label">Payback</div>
-      <div class="kpi-value" style="color:var(--purple)" id="k_payback">MÃªs 17</div>
+      <div class="kpi-value" style="color:var(--purple)" id="k_payback">Mês 17</div>
       <div class="kpi-sub">Lucro acum. positivo</div>
     </div>
     <div class="kpi">
       <div class="kpi-accent" style="background:linear-gradient(90deg,#dc2626,#f87171)"></div>
-      <div class="kpi-label">Maior ExposiÃ§Ã£o</div>
+      <div class="kpi-label">Maior Exposição</div>
       <div class="kpi-value" style="color:var(--red)" id="k_exp">-R$ 3.4M</div>
-      <div class="kpi-sub" id="k_exp_mes">MÃªs 7</div>
+      <div class="kpi-sub" id="k_exp_mes">Mês 7</div>
     </div>
     <div class="kpi">
       <div class="kpi-accent" style="background:linear-gradient(90deg,#d97706,#fbbf24)"></div>
@@ -300,7 +300,7 @@ tr:hover td{background:rgba(99,179,237,.03)}
   <!-- 2-col charts -->
   <div class="grid-2">
     <div class="chart-card">
-      <div class="card-title"><span class="cdot" style="background:var(--blue)"></span>DepÃ³sitos & GGR</div>
+      <div class="card-title"><span class="cdot" style="background:var(--blue)"></span>Depósitos & GGR</div>
       <canvas id="cRev" height="140"></canvas>
     </div>
     <div class="chart-card">
@@ -312,7 +312,7 @@ tr:hover td{background:rgba(99,179,237,.03)}
   <!-- 3-col: Retention + FTDs + Custos -->
   <div class="grid-3">
     <div class="chart-card">
-      <div class="card-title"><span class="cdot" style="background:var(--cyan)"></span>Curva de RetenÃ§Ã£o</div>
+      <div class="card-title"><span class="cdot" style="background:var(--cyan)"></span>Curva de Retenção</div>
       <div class="ret-row" id="retRow"></div>
     </div>
     <div class="chart-card">
@@ -320,14 +320,14 @@ tr:hover td{background:rgba(99,179,237,.03)}
       <canvas id="cFTD" height="150"></canvas>
     </div>
     <div class="chart-card">
-      <div class="card-title"><span class="cdot" style="background:var(--yellow)"></span>ComposiÃ§Ã£o de Custos</div>
+      <div class="card-title"><span class="cdot" style="background:var(--yellow)"></span>Composição de Custos</div>
       <canvas id="cCustos" height="150"></canvas>
     </div>
   </div>
 
   <!-- Table -->
   <div class="chart-card">
-    <div class="card-title"><span class="cdot" style="background:var(--dim)"></span>ProjeÃ§Ã£o Mensal Completa</div>
+    <div class="card-title"><span class="cdot" style="background:var(--dim)"></span>Projeção Mensal Completa</div>
     <div class="tbl-wrap"><table id="tbl"></table></div>
   </div>
 
@@ -373,7 +373,7 @@ function initCharts(){
   ]},options:{...base,scales:{y:{ticks:{callback:v=>fmtBRL(v)},grid:gridOpt},x:{grid:noGrid}}}});
 
   cRev=new Chart(document.getElementById('cRev'),{type:'line',data:{labels,datasets:[
-    {label:'DepÃ³sitos',data:[],borderColor:'#60a5fa',backgroundColor:'rgba(96,165,250,.05)',borderWidth:2,pointRadius:0,fill:true,tension:.3},
+    {label:'Depósitos',data:[],borderColor:'#60a5fa',backgroundColor:'rgba(96,165,250,.05)',borderWidth:2,pointRadius:0,fill:true,tension:.3},
     {label:'GGR',data:[],borderColor:'#fb923c',backgroundColor:'rgba(251,146,60,.05)',borderWidth:2,pointRadius:0,fill:true,tension:.3}
   ]},options:{...base,scales:{y:{ticks:{callback:v=>fmtBRL(v)},grid:gridOpt},x:{grid:noGrid}}}});
 
@@ -388,7 +388,7 @@ function initCharts(){
   ]},options:{...base,scales:{y:{position:'left',ticks:{callback:v=>fmtNum(v)},grid:gridOpt},y1:{position:'right',ticks:{callback:v=>'R$'+v},grid:noGrid},x:{grid:noGrid}}}});
 
   cCustos=new Chart(document.getElementById('cCustos'),{type:'doughnut',data:{
-    labels:['Investimento AquisiÃ§Ã£o','Plataforma','SalÃ¡rios','Marketing','Outros'],
+    labels:['Investimento Aquisição','Plataforma','Salários','Marketing','Outros'],
     datasets:[{data:[],backgroundColor:['rgba(96,165,250,.7)','rgba(251,146,60,.7)','rgba(167,139,250,.7)','rgba(52,211,153,.7)','rgba(100,116,139,.5)'],borderWidth:0,hoverOffset:6}]
   },options:{responsive:true,animation:{duration:250},plugins:{legend:{position:'bottom',labels:{padding:10,usePointStyle:true,pointStyle:'circle',font:{size:10}}}}}});
 }
@@ -451,12 +451,12 @@ function updateKPIs(p,sim){
   document.getElementById('k_lucro24').textContent=fmtBRL(sim.lucro_acum[23]);
   document.getElementById('k_lucro24').style.color=sim.lucro_acum[23]>=0?'var(--green)':'var(--red)';
   document.getElementById('k_roi24').textContent='ROI: '+fmtPct(sim.roi_acum[23]);
-  let paybackM='N/A';for(let i=0;i<MONTHS;i++){if(sim.lucro_acum[i]>=0){paybackM='MÃªs '+(i+1);break}}
+  let paybackM='N/A';for(let i=0;i<MONTHS;i++){if(sim.lucro_acum[i]>=0){paybackM='Mês '+(i+1);break}}
   document.getElementById('k_payback').textContent=paybackM;
   document.getElementById('k_payback').style.color=paybackM==='N/A'?'var(--red)':'var(--purple)';
   let minExp=0,minIdx=0;sim.lucro_acum.forEach((v,i)=>{if(v<minExp){minExp=v;minIdx=i}});
   document.getElementById('k_exp').textContent=fmtBRL(minExp);
-  document.getElementById('k_exp_mes').textContent='MÃªs '+(minIdx+1);
+  document.getElementById('k_exp_mes').textContent='Mês '+(minIdx+1);
   // LTV/CAC
   const ltv24=sim.ltv[23]||0;
   document.getElementById('k_ltvcac').textContent=(ltv24/p.cac).toFixed(1)+'x';
@@ -498,8 +498,8 @@ function updateCharts(p,sim){
 
 function updateTable(p,sim){
   const tbl=document.getElementById('tbl');
-  let h='<thead><tr><th>MÃ©trica</th>';labels.forEach(l=>h+='<th>'+l+'</th>');h+='</tr></thead><tbody>';
-  const rows=[['DepÃ³sitos',sim.depositos,'brl'],['GGR',sim.ggr,'brl'],['Receita LÃ­q.',sim.receita,'brl'],
+  let h='<thead><tr><th>Métrica</th>';labels.forEach(l=>h+='<th>'+l+'</th>');h+='</tr></thead><tbody>';
+  const rows=[['Depósitos',sim.depositos,'brl'],['GGR',sim.ggr,'brl'],['Receita Líq.',sim.receita,'brl'],
     ['Custos Totais',Array(24).fill(-(p.invest+sim.custos_fixos)),'brl'],['Lucro Op.',sim.lucro_op,'brl'],
     ['Lucro Acum.',sim.lucro_acum,'brl'],['FTDs Acum.',sim.ftds_acum,'num'],['ROI Acum.',sim.roi_acum,'pct']];
   rows.forEach(([lbl,data,fmt])=>{
