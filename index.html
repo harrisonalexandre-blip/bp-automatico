@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BP AUTOMATICO v2 — Calculadora de Cenários</title>
+<title>BP AUTOMATICO — Calculadora de Cenários</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
@@ -18,15 +18,12 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .live-badge{display:flex;align-items:center;gap:6px;font-size:9px;color:var(--green);font-weight:700;letter-spacing:1px;text-transform:uppercase}
 .pulse{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.version-badge{padding:4px 10px;border-radius:12px;font-size:8px;font-weight:700;letter-spacing:.5px;background:rgba(251,146,60,.1);color:var(--orange);border:1px solid rgba(251,146,60,.2)}
 .scenario-bar{background:rgba(15,23,42,.9);border-bottom:1px solid var(--border);padding:12px 28px;display:flex;align-items:center;gap:16px;position:sticky;top:54px;z-index:99;backdrop-filter:blur(12px);flex-wrap:wrap}
 .scenario-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;white-space:nowrap}
 .scenario-pills{display:flex;gap:6px;flex-wrap:wrap}
 .pill{padding:7px 18px;border:1px solid rgba(255,255,255,.08);border-radius:20px;background:transparent;color:var(--muted);font-family:Inter;font-size:11px;font-weight:600;cursor:pointer;transition:all .25s;white-space:nowrap}
 .pill:hover{background:rgba(99,179,237,.06);border-color:rgba(99,179,237,.2);color:var(--text)}
 .pill.active{background:linear-gradient(135deg,rgba(96,165,250,.15),rgba(34,211,238,.1));border-color:var(--blue);color:var(--blue);box-shadow:0 0 16px rgba(96,165,250,.1)}
-.pill.pill-op{border-color:rgba(251,146,60,.2)}
-.pill.pill-op.active{background:linear-gradient(135deg,rgba(251,146,60,.15),rgba(251,191,36,.1));border-color:var(--orange);color:var(--orange);box-shadow:0 0 16px rgba(251,146,60,.15)}
 .divider{width:1px;height:24px;background:rgba(255,255,255,.06)}
 .config-toggle{display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid rgba(255,255,255,.06);border-radius:20px;background:transparent;color:var(--muted);font-family:Inter;font-size:11px;font-weight:600;cursor:pointer;transition:all .25s}
 .config-toggle:hover{background:rgba(255,255,255,.04);color:var(--text)}
@@ -116,7 +113,6 @@ tr.row-section td{font-size:9px;color:var(--blue);font-weight:700;text-transform
     </div>
   </div>
   <div class="header-right">
-    <span class="version-badge">v2 — c/ dados do Operador</span>
     <div class="live-badge"><span class="pulse"></span>Cálculo ao vivo</div>
   </div>
 </div>
@@ -128,7 +124,7 @@ tr.row-section td{font-size:9px;color:var(--blue);font-weight:700;text-transform
     <button class="pill active" onclick="applyPreset('base',this)">Base</button>
     <button class="pill" onclick="applyPreset('otimista',this)">Otimista</button>
     <button class="pill" onclick="applyPreset('agressivo',this)">Agressivo</button>
-    <button class="pill pill-op" onclick="applyPreset('operador',this)">Operador (Pilhado)</button>
+
     <button class="pill" onclick="applyPreset('personalizado',this)">Personalizado</button>
   </div>
   <div class="divider"></div>
@@ -513,7 +509,7 @@ const PRESETS={
   base:{invest:1000000,cac:120,tkt_new:250,tkt_leg:600,ggr_pct:30,sem_trak:0,bonus:0,c_plat:200000,c_sal:500000,c_mkt:100000,c_out:50000,taxa_ggr:0,iss:0,pis:0,cofins:0,custo_dep:0,custo_ret:0,taxa_fisc:0,custo_jogos:0,r2:50,r3:40,r4:15,r5:10.1,r6:9.3,rs:6.6},
   otimista:{invest:2000000,cac:100,tkt_new:300,tkt_leg:700,ggr_pct:35,sem_trak:0,bonus:0,c_plat:250000,c_sal:600000,c_mkt:150000,c_out:50000,taxa_ggr:0,iss:0,pis:0,cofins:0,custo_dep:0,custo_ret:0,taxa_fisc:0,custo_jogos:0,r2:55,r3:45,r4:20,r5:14,r6:11,rs:8},
   agressivo:{invest:5000000,cac:90,tkt_new:350,tkt_leg:800,ggr_pct:35,sem_trak:0,bonus:0,c_plat:350000,c_sal:800000,c_mkt:200000,c_out:100000,taxa_ggr:0,iss:0,pis:0,cofins:0,custo_dep:0,custo_ret:0,taxa_fisc:0,custo_jogos:0,r2:60,r3:50,r4:25,r5:18,r6:14,rs:10},
-  operador:{invest:250000,cac:120,tkt_new:1100,tkt_leg:2200,ggr_pct:23,sem_trak:20,bonus:150000,c_plat:0,c_sal:0,c_mkt:0,c_out:30000,taxa_ggr:12,iss:2,pis:1.65,cofins:7.6,custo_dep:0.5,custo_ret:0.12,taxa_fisc:0.16,custo_jogos:12,r2:25,r3:10,r4:5,r5:3,r6:3,rs:3},
+
   personalizado:{invest:1500000,cac:110,tkt_new:280,tkt_leg:650,ggr_pct:32,sem_trak:0,bonus:0,c_plat:220000,c_sal:550000,c_mkt:120000,c_out:60000,taxa_ggr:0,iss:0,pis:0,cofins:0,custo_dep:0,custo_ret:0,taxa_fisc:0,custo_jogos:0,r2:48,r3:38,r4:16,r5:11,r6:9,rs:7}
 };
 
