@@ -56,6 +56,10 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2)}
 .churn-display .ch-label{font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
 .churn-display .ch-value{font-size:28px;font-weight:800;color:var(--red);margin-top:2px}
 .tax-summary{background:rgba(248,113,113,.04);border:1px solid rgba(248,113,113,.1);border-radius:8px;padding:12px;text-align:center;grid-column:span 2}
+.tax-credit{background:rgba(52,211,153,.04);border:1px solid rgba(52,211,153,.12);border-radius:8px;padding:12px;text-align:center;grid-column:span 2}
+.tax-credit .tc-label{font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.tax-credit .tc-value{font-size:22px;font-weight:800;color:var(--green);margin-top:2px}
+.tax-credit .tc-sub{font-size:9px;color:var(--dim);margin-top:2px}
 .tax-summary .ts-label{font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
 .tax-summary .ts-value{font-size:22px;font-weight:800;color:var(--red);margin-top:2px}
 .tax-summary .ts-sub{font-size:9px;color:var(--dim);margin-top:2px}
@@ -188,6 +192,11 @@ tr.row-section td{font-size:9px;color:var(--blue);font-weight:700;text-transform
       <div class="ts-label">Carga Tributária Total s/GGR</div>
       <div class="ts-value" id="d_tax_total">0%</div>
       <div class="ts-sub" id="d_tax_sub">Sem impostos configurados</div>
+    </div>
+    <div class="tax-credit">
+      <div class="tc-label">Desconto de Imposto (Crédito PIS/COFINS s/ Custos)</div>
+      <div class="tc-value" id="d_tax_credit">R$ 0</div>
+      <div class="tc-sub" id="d_tax_credit_sub">Crédito mensal sobre todos os custos da empresa</div>
     </div>
   </div>
 
@@ -343,7 +352,11 @@ function simulate(p){
   const opRate=p.custo_dep+p.custo_ret+p.taxa_fisc+p.custo_jogos;
   const mc_efetivo=1-taxRate-opRate; // Effective margin after taxes and ops
 
-  const depositos=[],dep_total=[],ggr_bruto=[],ggr_liq=[],impostos=[],custos_op=[],receita_liq=[],lucro_op=[],lucro_acum=[];
+  // Crédito PIS/COFINS sobre todos os custos da empresa
+  const totalCustosMensal=p.invest+custos_fixos+p.bonus;
+  const creditoPISCOFINS=totalCustosMensal*(p.pis+p.cofins);
+
+  const depositos=[],dep_total=[],ggr_bruto=[],ggr_liq=[],impostos=[],creditos_pis_cofins=[],impostos_liq=[],custos_op=[],receita_liq=[],lucro_op=[],lucro_acum=[];
   const ftds_arr=[],ftds_acum_arr=[],ltv=[],roi_m=[],roi_acum=[],ngr=[];
   let cum_lucro=0,cum_invest=0,cum_profit=0;
 
@@ -363,7 +376,15 @@ function simulate(p){
     const tax=g*taxRate;
     impostos.push(-tax);
 
-    const g_liq=g-tax;
+    // Crédito PIS/COFINS sobre custos
+    const credito=creditoPISCOFINS;
+    creditos_pis_cofins.push(credito);
+
+    // Imposto líquido (tax - crédito, mínimo 0)
+    const taxLiq=Math.max(0,tax-credito);
+    impostos_liq.push(-taxLiq);
+
+    const g_liq=g-taxLiq;
     ggr_liq.push(g_liq);
 
     // Operational costs on GGR
@@ -384,7 +405,7 @@ function simulate(p){
     ftds_arr.push(ftds);const fa=ftds*(m+1);ftds_acum_arr.push(fa);ltv.push(fa>0?dep_st/fa:0);
     cum_invest+=p.invest;cum_profit+=lo;roi_m.push(p.invest>0?lo/p.invest:0);roi_acum.push(cum_invest>0?cum_profit/cum_invest:0);
   }
-  return{depositos,dep_total,ggr_bruto,ggr_liq,impostos,custos_op,receita_liq,ngr,lucro_op,lucro_acum,ftds:ftds_arr,ftds_acum:ftds_acum_arr,ltv,roi_m,roi_acum,custos_fixos,taxRate,opRate,mc_efetivo};
+  return{depositos,dep_total,ggr_bruto,ggr_liq,impostos,creditos_pis_cofins,impostos_liq,custos_op,receita_liq,ngr,lucro_op,lucro_acum,ftds:ftds_arr,ftds_acum:ftds_acum_arr,ltv,roi_m,roi_acum,custos_fixos,taxRate,opRate,mc_efetivo,creditoPISCOFINS};
 }
 
 function updateDisplays(p){
@@ -406,6 +427,11 @@ function updateDisplays(p){
   const taxTotal=(p.taxa_ggr+p.iss+p.pis+p.cofins)*100;
   document.getElementById('d_tax_total').textContent=taxTotal.toFixed(1)+'%';
   document.getElementById('d_tax_sub').textContent=taxTotal>0?'Impostos sobre receita bruta':'Sem impostos configurados';
+  // Crédito PIS/COFINS sobre custos
+  const totalCustos=p.invest+(p.c_plat+p.c_sal+p.c_mkt+p.c_out)+p.bonus;
+  const creditoMensal=totalCustos*(p.pis+p.cofins);
+  document.getElementById('d_tax_credit').textContent=creditoMensal>0?fmtBRL(creditoMensal):'R$ 0';
+  document.getElementById('d_tax_credit_sub').textContent=creditoMensal>0?'(PIS '+((p.pis)*100).toFixed(2)+'% + COFINS '+((p.cofins)*100).toFixed(1)+'%) × Custos '+fmtBRL(totalCustos)+'/mês':'Configure PIS e COFINS para gerar crédito';
   document.getElementById('d_custo_dep').textContent=(p.custo_dep*100).toFixed(2)+'%';
   document.getElementById('d_custo_ret').textContent=(p.custo_ret*100).toFixed(2)+'%';
   document.getElementById('d_taxa_fisc').textContent=(p.taxa_fisc*100).toFixed(2)+'%';
@@ -454,7 +480,7 @@ function updateCharts(p,sim){
   cRev.data.datasets[0].data=sim.dep_total;cRev.data.datasets[1].data=sim.ggr_bruto;cRev.update();
   cROI.data.datasets[0].data=sim.roi_m.map(v=>v*100);cROI.data.datasets[1].data=sim.roi_acum.map(v=>v*100);cROI.update();
   cFTD.data.datasets[0].data=sim.ftds_acum;cFTD.data.datasets[1].data=sim.ltv;cFTD.update();
-  const taxAmt=sim.ggr_bruto[0]*sim.taxRate;
+  const taxAmt=Math.max(0,sim.ggr_bruto[0]*sim.taxRate-sim.creditoPISCOFINS);
   const opAmt=sim.ggr_bruto[0]*sim.opRate;
   cCustos.data.datasets[0].data=[p.invest,p.c_plat,p.c_sal,p.c_mkt,p.bonus,taxAmt,opAmt,p.c_out];cCustos.update();
 }
@@ -475,7 +501,12 @@ function updateTable(p,sim){
 
   if(hasTax){
     rows.push({s:true,label:'IMPOSTOS ('+((sim.taxRate)*100).toFixed(1)+'% s/GGR)'});
-    rows.push({label:'Impostos',data:sim.impostos,fmt:'brl'});
+    rows.push({label:'Impostos Brutos',data:sim.impostos,fmt:'brl'});
+    const hasCredit=sim.creditoPISCOFINS>0;
+    if(hasCredit){
+      rows.push({label:'Crédito PIS/COFINS s/ Custos',data:sim.creditos_pis_cofins,fmt:'brl'});
+      rows.push({label:'Impostos Líquidos',data:sim.impostos_liq,fmt:'brl'});
+    }
     rows.push({label:'GGR Líquido',data:sim.ggr_liq,fmt:'brl'});
   }
   if(hasOp){
